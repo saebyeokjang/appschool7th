@@ -17,3 +17,15 @@ print(phraseInfo)
 phraseInfo = phraseInfo + "\(numberOfFoxes) fox and \(nmmberOfAnimal) animals"
 
 print("Number of characters in phrase: \(phrase.count)")
+
+let multilineExplanation = """
+Why is the following phrase often used?
+"the quick brown fox jumps over the lazy dog"
+This phrase contains every letter in the alphabet.
+"""
+
+let phraseAreEqual = phrase == anotherPhrase
+print(phraseAreEqual) // false
+
+let phraseHas43Characters = phrase.count == 40 + 3
+print(phraseHas43Characters) // true
