@@ -30,6 +30,7 @@ print(moviesToWatch.count)
 // 배열 새 요소 삽입
 moviesToWatch.insert("The Avengers", at: 1)
 print(moviesToWatch[1])
+print(moviesToWatch)
 
 let removeItem = moviesToWatch.remove(at: 2)
 print(removeItem) // 삭제된 아이템 반환 값
@@ -43,3 +44,27 @@ print(firstMovieToWatch ?? "No movie")
 let lastMovieToWatch = moviesToWatch.last
 print(lastMovieToWatch as Any)
 
+// Array<String> == [String]
+let spyMovieSuggestions: [String] = ["The Bourne Identity", "Casino Royale", "Mission Impossible"]
+moviesToWatch += spyMovieSuggestions
+print(moviesToWatch)
+print(moviesToWatch.count)
+
+var starWarsTrilogy = Array<String>(repeating: "Star Wars: ", count: 3)
+starWarsTrilogy[0] += "The Force Awakens"
+starWarsTrilogy[1] += "The Empire Strikes Back"
+starWarsTrilogy[2] += "The Return of the Jedi"
+print(starWarsTrilogy)
+
+// 특정 범위의 요소 교체
+moviesToWatch.replaceSubrange(2...4, with: starWarsTrilogy)
+print(moviesToWatch)
+
+// 불변(immutable) NSArray
+let movieToWatchCopy = moviesToWatch
+print(movieToWatchCopy)
+
+// 가변(mutable) NSMutableArray
+var moviesToWatchCopy2 = moviesToWatch
+moviesToWatchCopy2.append("The Matrix")
+print(moviesToWatchCopy2)
