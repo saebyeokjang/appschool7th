@@ -15,6 +15,15 @@ struct TicTacToe {
         }
     }
     
+    subscript (row: Int, column: Int) -> GridPosition {
+        get {
+            gridStorage[row][column]
+        }
+        set (newValue) {
+            gridStorage[row][column] = newValue
+        }
+    }
+    
     func gameStateString() -> String {
         var stateString: String = "-------\n"
         for row in gridStorage {
@@ -34,6 +43,18 @@ struct TicTacToe {
 }
 
 var game = TicTacToe()
-game.gridStorage[1][1] = .player1
-game.gridStorage[0][2] = .player2
+// 서브스크립트 사용
+game[1, 1] = .player1
+print(game.gameStateString())
+
+game[0, 2] = .player2
+print(game.gameStateString())
+
+game[0, 0] = .player1
+print(game.gameStateString())
+
+game[1, 2] = .player2
+print(game.gameStateString())
+
+game[2, 2] = .player1
 print(game.gameStateString())
