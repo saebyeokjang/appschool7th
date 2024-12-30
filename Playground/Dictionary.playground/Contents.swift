@@ -15,6 +15,16 @@ enum CommunicationMethod {
     case tachyons
 }
 
+enum Role: String {
+    case captain = "Captain"
+    case firstOfficer = "First Officer"
+    case secondOfficer = "Second Officer"
+    case chiefEngineer = "Chief Engineer"
+    case councillor = "Councillor"
+    case securityOfficer = "Security Officer"
+    case chiefMedicalOfficer = "Chief Medical Officer"
+}
+
 class Person {
     let name: PersonName
     let preferredCommunicationMethod: CommunicationMethod
@@ -35,15 +45,15 @@ class Person {
 }
 
 // String키와 Person객체 값을 갖는 딕셔너리 생성
-var crew = Dictionary<String, Person>()
+var crew = Dictionary<Role, Person>()
 
-crew["Captain"] = Person(givenName: "Jean-Luc", familyName: "Picard", commsMethod: .phone)
-crew["First Officer"] = Person(givenName: "William", familyName: "Riker", commsMethod: .email)
-crew["Chief Engineer"] = Person(givenName: "Geordi", familyName: "LaForge", commsMethod: .textMessage)
-crew["Second Officer"] = Person(givenName: "Data", familyName: "Soong", commsMethod: .fax)
-crew["Councillor"] = Person(givenName: "Deanna", familyName: "Troi", commsMethod: .telepathy)
-crew["Security Officer"] = Person(givenName: "Tasha", familyName: "Yar", commsMethod: .subSpaceRelay)
-crew["Chief Medical Officer"] = Person(givenName: "Beverly", familyName: "Crusher", commsMethod: .tachyons)
+crew[.captain] = Person(givenName: "Jean-Luc", familyName: "Picard", commsMethod: .phone)
+crew[.firstOfficer] = Person(givenName: "William", familyName: "Riker", commsMethod: .email)
+crew[.chiefEngineer] = Person(givenName: "Geordi", familyName: "LaForge", commsMethod: .textMessage)
+crew[.secondOfficer] = Person(givenName: "Data", familyName: "Soong", commsMethod: .fax)
+crew[.councillor] = Person(givenName: "Deanna", familyName: "Troi", commsMethod: .telepathy)
+crew[.securityOfficer] = Person(givenName: "Tasha", familyName: "Yar", commsMethod: .subSpaceRelay)
+crew[.chiefMedicalOfficer] = Person(givenName: "Beverly", familyName: "Crusher", commsMethod: .tachyons)
 
 let roles = Array(crew.keys)
 print(roles)
@@ -52,6 +62,9 @@ let firstRole = roles.first!
 let cmo = crew[firstRole]!
 print("\(firstRole): \(cmo.displayName)")
 
-print(crew["Security Officer"]!.displayName)
-crew["Security Officer"] = Person(givenName: "Worf", familyName: "Son of Mogh", commsMethod: .subSpaceRelay)
-print(crew["Security Officer"]!.displayName)
+print(crew[.securityOfficer]!.displayName)
+crew[.securityOfficer] = Person(givenName: "Worf", familyName: "Son of Mogh", commsMethod: .subSpaceRelay)
+print(crew[.securityOfficer]!.displayName)
+
+//         Dictionary<String, Int>
+let inByName: [String: Int] = ["one": 1, "two": 2, "three": 3]
