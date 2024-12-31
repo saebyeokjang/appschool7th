@@ -4,7 +4,7 @@
 //
 //  Created by 장새벽 on 12/31/24.
 //
-import Foundtion
+import Foundation
 
 enum CompassDirection {
     case north
@@ -19,12 +19,12 @@ let otherDirection: CompassDirection = CompassDirection.east
 let direction: CompassDirection = .east
 
 
-switch direction {
-    case .north: print("북")
-    case .south: print("남")
-    case .east: print("동")
-    case .west: print("서")
-}
+//switch direction {
+//    case .north: print("북")
+//    case .south: print("남")
+//    case .east: print("동")
+//    case .west: print("서")
+//}
 
 enum Barcode {
     case qrCode(String)
@@ -45,7 +45,7 @@ enum Title: String {
 }
 
 let title: Title = .mr
-print(title.rawValue)
+//print(title.rawValue)
 
 enum Gender: Int {
     case male = 1
@@ -54,7 +54,7 @@ enum Gender: Int {
 }
 
 let gender: Gender = .other
-print(gender.rawValue)
+//print(gender.rawValue)
 
 
 /// 열거형
