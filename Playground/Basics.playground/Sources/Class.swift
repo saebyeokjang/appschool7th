@@ -25,7 +25,7 @@ class Person {
     func fullName() -> String {
         var fullName: String = ""
         if let middleName { fullName += middleName + " " }
-        fullName += givenName + " " + familyName
+        fullName += self.givenName + " " + self.familyName
         return fullName
     }
     
@@ -34,13 +34,56 @@ class Person {
     }
 }
 
-let person = Person.createDummyPerson()
-print(person.fullName())
+final class Friend: Person {
+    var whereWeMet: String?
+    
+    override var displayName: String {
+        return super.displayName + " - Where we met: \(self.whereWeMet ?? "Unknown")"
+    }
+}
+//class BusinessRelation: Friend {} // final 로 인해 더이상 상속 불가
 
-let person2 = Person(givenName: "Jane", familyName: "Doe")
-print(person2.fullName())
+final class Family: Person {
+    let relationship: String
+    
+    init(givenName: String, middleName: String? = nil, familyName: String = "Barker", relationship: String) {
+        self.relationship = relationship
+        super.init(givenName: givenName, middleName: middleName, familyName: familyName)
+    }
+    
+    override var displayName: String {
+        return super.displayName + " - Relationship: \(self.relationship)"
+    }
+}
 
-let person3 = Person.createDummyPerson()
-person3.country = "US"
-print(person3.displayName)
-print(person.displayName)
+
+public func runClass() {
+    let person = Person.createDummyPerson()
+    print(person.fullName())
+    
+    let person2 = Person(givenName: "Jane", familyName: "Doe")
+    print(person2.fullName())
+    
+    let person3 = Person.createDummyPerson()
+    person3.country = "US"
+    print(person3.displayName)
+    print(person.displayName)
+    
+    let friend = Friend(givenName: "길동", familyName: "홍")
+    friend.whereWeMet = "London"
+    print(friend.displayName)
+    
+    print("------------------------------")
+    
+    let steve = Person(givenName: "Steve", middleName: "Paul", familyName: "Jobs")
+    let sam = Friend(givenName: "Sam", middleName: "Now", familyName: "Rowley")
+    sam.whereWeMet = "Work together at Jaguar Land Rover"
+    let maddie = Family(givenName: "Maddie", middleName: "Rose", relationship: "Daughter")
+    let mark = Family(givenName: "Mark", middleName: "David", familyName: "Pendlebury", relationship: "Brother-In-Law")
+    mark.country = "USA"
+    
+    print(steve.displayName)
+    print(sam.displayName)
+    print(maddie.displayName)
+    print(mark.displayName)
+}
