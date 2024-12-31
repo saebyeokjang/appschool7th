@@ -81,4 +81,4 @@ enum Planet: String {
 }
 
 let earth = Planet.earth
-print(earth.surfaceGravity()) // 9.8
+//print(earth.surfaceGravity()) // 9.8
