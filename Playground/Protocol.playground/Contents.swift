@@ -31,3 +31,43 @@ class Car : Movable {
 
 let car = Car()
 car.move(to: CGPoint(x: 10, y: 20))
+
+protocol Named {
+    init (name: String)
+    
+    func displayName()
+}
+
+extension Named {
+    func printDescription() {
+        print(displayName)
+    }
+}
+
+class Person2 : Named {
+    var name: String
+    
+    func displayName() {
+        print("\(name)")
+    }
+    
+    // 필수생성자
+    required init(name: String) {
+        self.name = name
+    }
+}
+
+struct Point : Named {
+    func displayName() {
+        print("\(name)")
+    }
+    
+    let name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+}
+
+let saebyeok = Person2(name: "SaeByeok")
+saebyeok.displayName()
