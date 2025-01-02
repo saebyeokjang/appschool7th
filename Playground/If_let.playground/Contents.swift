@@ -39,3 +39,38 @@ printBallDetails(ofNumber: 8)
 printBallDetails(ofNumber: 12)
 printBallDetails(ofNumber: 0)
 printBallDetails(ofNumber: 16)
+
+class PoolFrame {
+    var player1BallType: PoolBallType?
+    var player2BallType: PoolBallType?
+}
+
+class PoolTable {
+    var currentFrame: PoolFrame?
+}
+
+func printBallTypeOfPlayer1(forTable table: PoolTable) {
+    if let frame = table.currentFrame,
+       let ballType = frame.player1BallType {
+        print(ballType.rawValue)
+    } else {
+        print("Player 1 has no ball type or there is no current frame")
+    }
+}
+
+// 진행 중인 프레임이 없는 테이블
+let table = PoolTable()
+table.currentFrame = nil
+printBallTypeOfPlayer1(forTable: table)
+
+// 진행 중인 프레임이 있지만 넣은 공이 없는 테이블
+let frame = PoolFrame()
+frame.player1BallType = nil
+frame.player2BallType = nil
+table.currentFrame = frame
+printBallTypeOfPlayer1(forTable: table)
+
+// 진행 중인 프레임이 있고 공이 넣어진 테이블
+frame.player1BallType = .solid
+frame.player2BallType = .stripe
+printBallTypeOfPlayer1(forTable: table)
