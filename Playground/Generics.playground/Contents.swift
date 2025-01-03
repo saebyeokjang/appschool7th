@@ -1,3 +1,5 @@
+import CoreLocation
+
 class RecentList<T: CustomStringConvertible> {
     var slot1: T?
     var slot2: T?
@@ -79,7 +81,6 @@ let oscars2022 = makeDuplicates(of: "Dune", withKeys: awards)
 print(oscars2022["Best Visual Effects"] ?? "")
 
 // 프로토콜과 제네릭
-import CoreLocation
 
 protocol TransportLocation {
     var location: CLLocation { get }
@@ -151,3 +152,39 @@ let durationByTrain = trainJourney.durationInHours
 
 print("여정 거리: \(distanceByTrain) km")
 print("여정 소요 시간: \(durationByTrain) 시간")
+
+extension CLLocation: TransportLocation {
+    var location: CLLocation { self }
+}
+
+enum Road: TransportMethod {
+    typealias CollectionPoint = CLLocation
+    
+    case car
+    case motorbike
+    case van
+    case hgv
+    
+    var defaultCollectionPoint: CLLocation {
+        return CLLocation(latitude: 51.1, longitude: 0.1)
+    }
+    
+    var averageSpeedInKPH: Double {
+        switch self {
+        case .car: return 60
+        case .motorbike: return 70
+        case .van: return 55
+        case .hgv: return 50
+        }
+    }
+}
+
+let start = CLLocation(latitude: 51.3994669, longitude: 0.0116888)
+let end = CLLocation(latitude: 51.2968654, longitude: 0.5053609)
+let roadJourney = Journey(start: start, end: end, method: Road.car)
+
+let distanceByCar = roadJourney.distanceInKMs
+let durationByCar = roadJourney.durationInHours
+
+print("여정 거리: \(distanceByCar) km")
+print("여정 소요 시간: \(durationByCar) 시간")
