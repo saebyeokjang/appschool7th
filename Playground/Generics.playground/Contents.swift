@@ -1,6 +1,6 @@
 import UIKit
 
-class RecentList<T> {
+class RecentList<T: CustomStringConvertible> {
     var slot1: T?
     var slot2: T?
     var slot3: T?
@@ -34,7 +34,11 @@ var recentlyCopied = recentlyCopiedList.getAll()
 print(recentlyCopied) // Last, Next, First
 
 
-class Person {
+class Person: CustomStringConvertible {
+    var description: String {
+        return "Person(\(name))"
+    }
+    
     let name: String
     
     init(name: String) {
@@ -53,5 +57,5 @@ recentlyVisitedList.add(recent: maria)
 var recentlyVisited = recentlyVisitedList.getAll()
 
 for person in recentlyVisited {
-    print(person.name)
+    print(person)
 }
