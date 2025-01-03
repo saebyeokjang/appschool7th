@@ -59,3 +59,22 @@ var recentlyVisited = recentlyVisitedList.getAll()
 for person in recentlyVisited {
     print(person)
 }
+
+func makeDuplicates<T, Key: Hashable>(of item: T, withKeys keys: Set<Key>) -> [Key: T]{
+    var duplicates: [Key: T] = [:]
+    
+    for key in keys {
+        duplicates[key] = item
+    }
+    
+    return duplicates
+}
+
+let awards: Set<String> = ["Best Visual Effects",
+                           "Best Original Score",
+                           "Best Original Song",
+                           "Best Film Editing"]
+
+let oscars2024 = makeDuplicates(of: "Dune", withKeys: awards)
+
+print(oscars2024["Best Visual Effects"] ?? "")
