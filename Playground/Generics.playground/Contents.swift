@@ -1,4 +1,5 @@
 import UIKit
+import CoreLocation
 
 class RecentList<T: CustomStringConvertible> {
     var slot1: T?
@@ -78,3 +79,37 @@ let awards: Set<String> = ["Best Visual Effects",
 let oscars2024 = makeDuplicates(of: "Dune", withKeys: awards)
 
 print(oscars2024["Best Visual Effects"] ?? "")
+
+
+// 프로토콜과 제네릭
+
+protocol TransportLocation {
+    var location: CLLocation { get }
+}
+
+protocol TransportMethod {
+    associatedtype CollectionPoint: TransportLocation
+    
+    var defaultCollectionPoint: CollectionPoint { get }
+    var averageSpeedInKPH: Double { get }
+}
+
+enum TrainStation: String, TransportLocation {
+    case BMS = "Bromley South"
+    case VIC = "London Victoria"
+    case RAI = "Rainhan (Kent)"
+    case BTN = "Brighton (East Sussex)"
+    
+    var location: CLLocation {
+        return CLLocation()
+    }
+}
+    
+struct Train: TransportMethod {
+    typealias CollectionPoint = TrainStation
+    
+    var defaultCollectionPoint: CollectionPoint {
+        return TrainStation.BMS
+    }
+    var averageSpeedInKPH: Double { 100 }
+}
