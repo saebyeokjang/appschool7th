@@ -7,7 +7,6 @@ enum ResponsError: Error {
     case unexpectedResponseStructure
 }
 
-@MainActor
 func fetchRepos(forUsername username: String,
                 completionHandler: @escaping ([[String: Any]]?, ResponsError?) -> Void) async {
     let urlString = "https://api.github.com/users/\(username)/repos"
