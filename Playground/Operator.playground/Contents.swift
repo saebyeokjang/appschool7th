@@ -43,8 +43,32 @@ func isSupported(device: Int) -> Bool {
     return containsDevice
 }
 
+// phone + tablet + tv calculation:
+//   0 0 0 1 0 0 1 0 = phone
+// + 0 0 0 0 0 0 1 0 = tablet
+// + 0 0 0 0 0 1 0 0 = tv
+// ------------------
+//   0 0 0 1 0 1 1 0 = deviceThatSupportUIKit
 let deviceThatSupportUIKit = phone + tablet + tv
+
+// desktop + tv calculation:
+//   0 0 0 0 1 0 0 0 = desktop
+// + 0 0 0 0 0 1 0 0 = tv
+// ------------------
+//   0 0 0 0 1 1 0 0 = stationaryDevice
 let stationaryDevice = desktop + tv
+
+// deviceThatSupportUIKit | stationaryDevice calculation:
+//   0 0 0 1 0 1 1 0 = deviceThatSupportUIKit
+// | 0 0 0 0 1 1 0 0 = stationaryDevice
+// ------------------
+//   0 0 0 1 1 1 1 0 = stationaryOrUIKietDevices
 let stationaryOrUIKitDevice = deviceThatSupportUIKit | stationaryDevice
+
+// Verification of union operation:
+//   0 0 0 1 1 1 1 0 = stationaryOrUIKietDevices
+// = 0 0 0 1 1 1 1 0 = (phone + tablet + tv + desktop)
+// ------------------
+//   true              = orIsUnion
 let orIsUnion = stationaryOrUIKitDevice == (phone + tablet + tv + desktop)
 print(orIsUnion)
