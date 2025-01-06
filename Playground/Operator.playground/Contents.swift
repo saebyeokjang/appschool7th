@@ -131,7 +131,7 @@ let appendedString = "Two" ->> "One"
 print(appendedString)
 
 let appendStringToArray = "Three" ->> ["One", "Two"]
-print(appendedArray)
+print(appendStringToArray)
 
 let appendedArray = ["Three"] ->> ["One", "Two"]
 print(appendedArray)
