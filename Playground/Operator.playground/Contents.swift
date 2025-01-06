@@ -44,11 +44,11 @@ func isSupported(device: Int) -> Bool {
 }
 
 // phone + tablet + tv calculation:
-//   0 0 0 1 0 0 1 0 = phone
+//   0 0 0 0 0 0 0 1 = phone
 // + 0 0 0 0 0 0 1 0 = tablet
 // + 0 0 0 0 0 1 0 0 = tv
 // ------------------
-//   0 0 0 1 0 1 1 0 = deviceThatSupportUIKit
+//   0 0 0 0 0 1 1 1 = deviceThatSupportUIKit
 let deviceThatSupportUIKit = phone + tablet + tv
 
 // desktop + tv calculation:
@@ -59,15 +59,15 @@ let deviceThatSupportUIKit = phone + tablet + tv
 let stationaryDevice = desktop + tv
 
 // deviceThatSupportUIKit | stationaryDevice calculation:
-//   0 0 0 1 0 1 1 0 = deviceThatSupportUIKit
+//   0 0 0 0 0 1 1 1 = deviceThatSupportUIKit
 // | 0 0 0 0 1 1 0 0 = stationaryDevice
 // ------------------
-//   0 0 0 1 1 1 1 0 = stationaryOrUIKietDevices
+//   0 0 0 0 1 1 1 1 = stationaryOrUIKietDevices
 let stationaryOrUIKitDevice = deviceThatSupportUIKit | stationaryDevice
 
 // Verification of union operation:
-//   0 0 0 1 1 1 1 0 = stationaryOrUIKietDevices
-// = 0 0 0 1 1 1 1 0 = (phone + tablet + tv + desktop)
+//   0 0 0 0 1 1 1 1 = stationaryOrUIKietDevices
+// = 0 0 0 0 1 1 1 1 = (phone + tablet + tv + desktop)
 // ------------------
 //   true              = orIsUnion
 let orIsUnion = stationaryOrUIKitDevice == (phone + tablet + tv + desktop)
