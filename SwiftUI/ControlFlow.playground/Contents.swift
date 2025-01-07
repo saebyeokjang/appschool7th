@@ -70,3 +70,32 @@ func multiplyByTen(value: Int?) {
 }
 multiplyByTen(value: 5)
 multiplyByTen(value: 10)
+
+// Switch
+var temperature = 85
+
+switch temperature {
+case 0...50:
+    print("It's cold")
+case 51...100:
+    print("It's warm")
+default:
+    print("It's hot")
+}
+
+print("fallthrough")
+temperature = 0
+// fallthrough -> 실행을 이어서 계속함
+switch temperature {
+case 0...49 where temperature % 2 == 0:
+    print("Cold and even")
+    fallthrough
+case 50...79 where temperature % 2 == 0:
+    print("Warm and even")
+    fallthrough
+case 80...110 where temperature % 2 == 0:
+    print("Hot and even")
+    fallthrough
+default:
+    print("Teperature out of range or odd")
+}
