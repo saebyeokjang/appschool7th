@@ -78,3 +78,14 @@ class MyClass1: MessageBuilder {
         self.name = name
     }
 }
+
+func doubleFunc1(value: Int) -> some Equatable {
+    return value * 2
+}
+
+func doubleFunc2(value: String) -> some Equatable {
+    return value + value
+}
+
+let intOne = doubleFunc1(value: 10)
+let stringOne = doubleFunc2(value: "Hello")
