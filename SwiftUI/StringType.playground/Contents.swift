@@ -37,3 +37,13 @@ for scene in romeoAndJuliet {
 }
 
 print("There are \(act1SceneCount) scenes in Act 1.")
+
+var newLine = "\n" // newline 특수문자
+print(newLine)
+
+var backSlash = "\\"
+print(backSlash)
+
+let escapedString =
+"줄바꿈: \n, 캐리지 리턴: \r, 탭: \t, 역슬래시: \\, 따옴표: \", 작은따옴표: ', 유니코드: \u{FF}"
+print(escapedString)
