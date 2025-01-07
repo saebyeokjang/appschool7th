@@ -66,3 +66,26 @@ print(mathFunction(2, 3))
 
 let multiply: (Int, Int) -> Int = { $0 * $1 }
 print(multiply(2, 3))
+
+func performOperation(_ a: Int, _ b: Int, operation: (Int, Int) -> Int) -> Int {
+    return operation(a, b)
+}
+
+let result = performOperation(20, 30, operation: multiply)
+print(result)
+
+print(performOperation(40, 50, operation: { $0 * $1 }))
+
+func makeIncrementer(incrementAmount: Int) -> () -> Int {
+    var total = 0
+    let incrementer: () -> Int = {
+        total += incrementAmount
+        return total
+    }
+    return incrementer
+}
+
+let incrementByTen = makeIncrementer(incrementAmount: 10)
+print(incrementByTen())
+print(incrementByTen())
+print(incrementByTen())
