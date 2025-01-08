@@ -89,3 +89,25 @@ func doubleFunc2(value: String) -> some Equatable {
 
 let intOne = doubleFunc1(value: 10)
 let stringOne = doubleFunc2(value: "Hello")
+
+class SavingsAccount: BankAccount {
+    var interestRate: Float = 0.0
+    
+    init(number: Int, balance: Float, rate: Float) {
+        self.interestRate = rate
+        super.init(accountNumber: number, accountBalance: balance)
+    }
+    
+    func calculateInterest() -> Float {
+        return interestRate * accountBalance
+    }
+    
+    override func displayBalance() {
+        super.displayBalance()
+        print("현재 이자율: \(interestRate)")
+    }
+}
+
+let savings1 = SavingsAccount(number: 12312312, balance: 400.54, rate: 0.05)
+print(savings1.calculateInterest())
+savings1.displayBalance()
