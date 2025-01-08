@@ -48,3 +48,15 @@ secondArray.forEach { print($0) }
 for item in secondArray {
     print(item)
 }
+
+let mixedArray: [Any] = ["A String", 432, 34.989]
+
+for object in mixedArray {
+    if let intValue = object as? Int {
+        print("intValue: \(intValue)")
+    } else if let doubleValue = object as? Double {
+        print("doubleValue: \(doubleValue)")
+    } else if let stringValue = object as? String {
+        print("stringValue: \(stringValue)")
+    }
+}
