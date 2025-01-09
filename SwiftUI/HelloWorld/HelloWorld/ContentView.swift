@@ -10,7 +10,13 @@ import SwiftUI
 struct ContentView: View {
     
     var body: some View {
-        Spacer()
+        Text("Hello World!")
+            .font(.largeTitle)
+            .border(Color.black)
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
+            .background(Color.red)
+            // SafeArea 무시
+            .ignoresSafeArea(.all)
     }
 }
 
