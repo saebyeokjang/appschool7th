@@ -10,13 +10,18 @@ import SwiftUI
 struct ContentView: View {
     
     var body: some View {
-        Text("Hello World!")
-            .font(.largeTitle)
-            .border(Color.black)
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
-            .background(Color.red)
-            // SafeArea 무시
-            .ignoresSafeArea(.all)
+        GeometryReader { geometry in
+            VStack {
+                Text("Hello World!, how are you?")
+                    .font(.largeTitle)
+                    .frame(width: geometry.size.width / 2,
+                           height: (geometry.size.height / 4) * 3)
+                Text("Goodbye World!")
+                    .font(.largeTitle)
+                    .frame(width: geometry.size.width / 3,
+                           height: geometry.size.height / 4)
+            }
+        }
     }
 }
 
