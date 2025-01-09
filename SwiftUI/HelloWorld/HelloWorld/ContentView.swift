@@ -7,60 +7,32 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    // 상태를 관리하는 프로퍼티
-    @State private var count = 0
+struct MyVStack<Content: View>: View {
+    let content: () -> Content
+    
+    init(@ViewBuilder content: @escaping () -> Content) {
+        self.content = content
+    }
     
     var body: some View {
-        VStack(spacing: 20) { // 수직 스택으로 컨텐츠 정렬
-            Text("Count")
-                .font(.largeTitle)
-            
-            Text("\(count)")
-                .font(.system(size: 100))
-                .fontWeight(.bold)
-                .foregroundColor(count % 2 == 0 ? .blue : .red) // 짝수/홀수에 따른 색상 변경
-            
-            HStack { // 수평 스택으로 버튼 정렬
-                Button(action: {
-                    self.count -= 1
-                }, label: {
-                    Text("-")
-                        .font(.largeTitle)
-                        .padding()
-                        .background(Color.gray)
-                        .foregroundColor(.white)
-                        .clipShape(Circle())
-                })
-                
-                Spacer() // 중간 여백
-                
-                Button(action: {
-                    self.count = 0
-                }) {
-                    Text("초기화")
-                        .font(.title3)
-                        .padding()
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .clipShape(Circle())
-                }
-                
-                Spacer()
-                
-                Button(action: {
-                    self.count += 1
-                }) {
-                    Text("+")
-                        .font(.largeTitle)
-                        .padding()
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .clipShape(Circle())
-                }
+        VStack(spacing: 10) {
+            content()
+        }
+        .font(.largeTitle)
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        MyVStack {
+            Text("Text 1")
+            Text("Text 2")
+            HStack {
+                Image(systemName: "star.fill")
+                Image(systemName: "star.fill")
+                Image(systemName: "star")
             }
         }
-        .padding() // 외부 여백 추가
     }
 }
 
