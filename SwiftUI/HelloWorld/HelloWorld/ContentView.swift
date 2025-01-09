@@ -35,32 +35,51 @@ struct VerticalLabelStyle: LabelStyle {
 
 struct ContentView: View {
     var body: some View {
-        MyVStack {
-            Text("Text 1")
-            Text("Text 2")
+        VStack {
             HStack {
-                Image(systemName: "star.fill")
-                Image(systemName: "star.fill")
-                Image(systemName: "star")
+                Image(systemName: "goforward.10")
+                Image(systemName: "goforward.15")
+                Image(systemName: "goforward.30")
             }
-            Button(action: {
-                print("click")
-            })
-            {
-                Label("Welcome to SwiftUI",
-                      systemImage: "person.circle.fill")
+            ZStack {
+                Image(systemName: "goforward.10")
+                Image(systemName: "goforward.15")
+                Image(systemName: "goforward.30")
             }
-            Label(title: {
-                Text("Hello World").font(.largeTitle)
-            },
-                  icon: {
-                Circle()
-                    .fill(Color.red)
-                    .frame(width: 35, height: 35)
-            })
-            .labelStyle(.titleAndIcon)
-            Label("수직 레이블", systemImage: "moon.fill")
-                .labelStyle(VerticalLabelStyle())
+            // 복잡한 중첩 레이아웃 예시
+            Text("Financial Results")
+                .font(.title)
+            HStack {
+                Text("Q1 Sales")
+                    .font(.headline)
+                VStack {
+                    Text("January")
+                    Text("February")
+                    Text("March")
+                }
+                VStack {
+                    Text("$1000")
+                    Text("$200")
+                    Text("$3000")
+                }
+            }
+            // 정렬, 여백
+            HStack(alignment: .top) {
+                Text("Q1 Sales")
+                    .font(.headline)
+                Spacer()
+                VStack(alignment: .center) {
+                    Text("January")
+                    Text("February")
+                    Text("March")
+                }
+                Spacer()
+                VStack(alignment: .trailing) {
+                    Text("$1000")
+                    Text("$200")
+                    Text("$3000")
+                }
+            }
         }
     }
 }
