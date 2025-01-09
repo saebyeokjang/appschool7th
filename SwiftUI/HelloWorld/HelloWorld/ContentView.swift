@@ -36,6 +36,19 @@ struct ContentView: View {
                 Spacer() // 중간 여백
                 
                 Button(action: {
+                    self.count = 0
+                }) {
+                    Text("초기화")
+                        .font(.title3)
+                        .padding()
+                        .background(Color.red)
+                        .foregroundColor(.white)
+                        .clipShape(Circle())
+                }
+                
+                Spacer()
+                
+                Button(action: {
                     self.count += 1
                 }) {
                     Text("+")
