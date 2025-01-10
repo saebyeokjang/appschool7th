@@ -8,17 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var isTapped = false
+    @State private var showAlert = false
     
     var body: some View {
-        Text("Tap me!")
-            .font(.largeTitle)
-            .padding()
-            .background(isTapped ? Color.green : Color.red)
-            // count를 이용해 실행시킬 탭 횟수를 조절할 수 있음
-            .onTapGesture(count: 2) {
-                isTapped.toggle()
-            }
+        Button("Show Alert") {
+            showAlert = true
+        }
+        .alert("Important Message", isPresented: $showAlert) {
+            Button("OK", role: .cancel) { }
+        } message: { Text("This is an alert message") }
     }
 }
 
