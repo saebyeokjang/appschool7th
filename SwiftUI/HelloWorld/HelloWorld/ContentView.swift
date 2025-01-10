@@ -8,16 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var wifiEnabled: Bool = true
-    @State private var userName = ""
+    @State private var isTapped = false
     
     var body: some View {
-        VStack {
-            Toggle("Enable Wi-Fi", isOn: $wifiEnabled)
-            TextField("Enter user name", text: $userName)
-            Text(userName)
-            Image(systemName: wifiEnabled ? "wifi" : "wifi.slash")
-        }
+        Text("Tap me!")
+            .font(.largeTitle)
+            .padding()
+            .background(isTapped ? Color.green : Color.red)
+            // count를 이용해 실행시킬 탭 횟수를 조절할 수 있음
+            .onTapGesture(count: 2) {
+                isTapped.toggle()
+            }
     }
 }
 
