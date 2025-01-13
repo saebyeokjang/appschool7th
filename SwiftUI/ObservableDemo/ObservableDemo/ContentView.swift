@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct ContentView: View {
-    @StateObject var timerData: TimerData = TimerData()
+    // @Observable 지정 객체는 @State 로 상태 관리가 가능해짐 (2024 이후)
+    @State var timerData: TimerData = TimerData()
     
     var body: some View {
-        NavigationView {
+        // NavigationView 는 NavigationStack 으로 이름 변경됨
+        NavigationStack {
             VStack {
                 Text("Timer count = \(timerData.timeCount)")
                     .font(.largeTitle)
@@ -23,8 +23,12 @@ struct ContentView: View {
                 Button(action: resetCount) {
                     Text("Reset Counter")
                 }
+                NavigationLink("Next Screen", destination: {
+                    SecondView()
+                })
             }
         }
+        .environment(timerData)
     }
     
     func resetCount() {
