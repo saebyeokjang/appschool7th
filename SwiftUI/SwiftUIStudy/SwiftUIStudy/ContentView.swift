@@ -7,19 +7,29 @@
 
 import SwiftUI
 
+struct TeamMember: Identifiable {
+    let id = UUID()  // 고유 식별자를 위한 UUID (자동 생성)
+    let name: String
+    let symbol: String
+}
+
 struct ContentView: View {
-    // 배열이 변경될 때 UI가 자동으로 업데이트되도록 @State 프로퍼티 래퍼 사용
-    @State var logTeam: [String] = ["강보현", "김덕원", "이성훈", "장새벽", "조영민"]
+    let logTeam: [TeamMember] = [
+        TeamMember(name: "강보현", symbol: "🐥"),
+        TeamMember(name: "김덕원", symbol: "⚾️"),
+        TeamMember(name: "이성훈", symbol: "🧌"),
+        TeamMember(name: "장새벽", symbol: "🌒"),
+        TeamMember(name: "조영민", symbol: "🦊")
+    ]
     
     var body: some View {
         NavigationStack {
-            List {
-                Section(header: Text("5조 log").textCase(nil)) {
-                    ForEach(logTeam, id: \.self) { member in
-                        Text(member)
-                    }
+            List(logTeam) { member in
+                NavigationLink(destination: Text("\(member.symbol)").font(.system(size: 200))) {
+                    Text(member.name)
                 }
             }
+            .navigationTitle("5조: log")
         }
     }
 }

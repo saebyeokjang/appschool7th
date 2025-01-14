@@ -25,7 +25,6 @@ struct ContentView: View {
         ToDoItem(task: "Pick up the kids", imageName: "person.2.fill"),
         ToDoItem(task: "Wash the car", imageName: "car.fill")
     ]
-    let logTeam: [String] = ["강보현", "김덕원", "이성훈", "장새벽", "조영민"]
     
     var body: some View {
         NavigationStack {
