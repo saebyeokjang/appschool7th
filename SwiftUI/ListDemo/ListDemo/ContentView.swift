@@ -48,18 +48,20 @@ struct ContentView: View {
                             }
                         }
                     }
+                    .onDelete(perform: deleteItem)
+                    .onMove(perform: moveItem)
                 }
             }
             // 네비게이션 바 타이틀 지정
             .navigationTitle("To Do List")
             // 네비게이션 바 스타일 변경
-            //.navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.inline)
             
             // 최신 업데이트: 네비게이션 바 아이템 대신 ToolvarItem을 사용
             .toolbar(content: {
                 ToolbarItem(placement: .primaryAction, content: {
                     Button("Add", action: {})})
-                })
+            })
             
             // NavigationLink value 타입에 따른 뷰 빌더를 실행
             .navigationDestination(for: Int.self) { count in
@@ -83,6 +85,16 @@ struct ContentView: View {
             }
         }
     }
+    
+    func deleteItem(at offsets: IndexSet) {
+        // 항목 삭제 로직
+        listData.remove(atOffsets: offsets)
+    }
+    
+    func moveItem(from source: IndexSet, to destination: Int) {
+        listData.move(fromOffsets: source, toOffset: destination)
+    }
+    
 }
 
 #Preview {
