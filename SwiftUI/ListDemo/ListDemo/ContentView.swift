@@ -26,30 +26,50 @@ struct ContentView: View {
         
     ]
     var body: some View {
-        List {
-            Section(header: Text("Settings")) {
-                Toggle(isOn: $toggleStatus) {
-                    Text("Allow Notifications")
+        NavigationStack {
+            List {
+                // 설정 섹션
+                Section(header: Text("Settings")) {
+                    // 알림 허용 토글 스위치
+                    Toggle(isOn: $toggleStatus) {
+                        Text("Allow Notifications")
+                    }
+                    NavigationLink(value: listData.count) {
+                        Text("View Task Count")
+                    }
                 }
-            }
-            Section(header: Text("To Do Tasks")) {
-                ForEach(listData) { item in
-                    HStack {
-                        Image(systemName: item.imageName)
-                        Text(item.task)
+                // ToDo Task 섹션
+                Section(header: Text("To Do Tasks")) {
+                    ForEach(listData) { item in
+                        NavigationLink(value: item.task) {
+                            HStack {
+                                Image(systemName: item.imageName)
+                                Text(item.task)
+                            }
+                        }
                     }
                 }
             }
-        }
-        .refreshable {
-            listData = [
-                ToDoItem(task: "Order dinner",
-                         imageName: "dollarsign.circle.fill"),
-                ToDoItem(task: "Call financial advisor",
-                         imageName: "phone.fill"),
-                ToDoItem(task: "Sell the kids",
-                         imageName: "person.2.fill")
-            ]
+            // NavigationLink value 타입에 따른 뷰 빌더를 실행
+            .navigationDestination(for: Int.self) { count in
+                Text("Number of task: \(count)")
+            }
+            .navigationDestination(for: String.self) { task in
+                VStack {
+                    Text("Selected Task: \(task)")
+                }
+            }
+            // 당겨서 새로고침 기능
+            .refreshable {
+                listData = [
+                    ToDoItem(task: "Order dinner",
+                             imageName: "dollarsign.circle.fill"),
+                    ToDoItem(task: "Call financial advisor",
+                             imageName: "phone.fill"),
+                    ToDoItem(task: "Sell the kids",
+                             imageName: "person.2.fill")
+                ]
+            }
         }
     }
 }
