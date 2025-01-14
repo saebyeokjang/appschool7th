@@ -7,8 +7,35 @@
 
 import SwiftUI
 
+// 새로운 커스텀 세로 정렬 값을 추가
+extension VerticalAlignment {
+    private enum OneThird: AlignmentID {
+        static func defaultValue(in d: ViewDimensions) -> CGFloat {
+            d.height / 3
+        }
+    }
+    static let oneThird = VerticalAlignment(OneThird.self)
+}
+
 struct ContentView: View {
     var body: some View {
+        HStack(alignment: .oneThird) {
+            Rectangle()
+                .fill(Color.green)
+                .frame(width: 50, height: 200)
+            Rectangle()
+                .fill(Color.red)
+                .alignmentGuide(.oneThird) { d in d[VerticalAlignment.top] }
+                .frame(width: 50, height: 200)
+            Rectangle()
+                .fill(Color.blue)
+                .frame(width: 50, height: 200)
+            Rectangle()
+                .fill(Color.orange)
+                .alignmentGuide(.oneThird) { d in d[VerticalAlignment.top] }
+                .frame(width: 50, height: 200)
+        }
+        
         // VStack에서 trailing(오른쪽) 정렬 지정
         // 모든 하위 뷰들이 오른쪽으로 정렬됨
         VStack(alignment: .trailing) {
