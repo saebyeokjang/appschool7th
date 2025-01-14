@@ -50,6 +50,17 @@ struct ContentView: View {
                     }
                 }
             }
+            // 네비게이션 바 타이틀 지정
+            .navigationTitle("To Do List")
+            // 네비게이션 바 스타일 변경
+            //.navigationBarTitleDisplayMode(.inline)
+            
+            // 최신 업데이트: 네비게이션 바 아이템 대신 ToolvarItem을 사용
+            .toolbar(content: {
+                ToolbarItem(placement: .primaryAction, content: {
+                    Button("Add", action: {})})
+                })
+            
             // NavigationLink value 타입에 따른 뷰 빌더를 실행
             .navigationDestination(for: Int.self) { count in
                 Text("Number of task: \(count)")
