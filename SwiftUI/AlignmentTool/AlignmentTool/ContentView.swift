@@ -7,17 +7,77 @@
 
 import SwiftUI
 
-class Model: ObservableObject {
-    @Published var minimumContainer = true
-    @Published var extendedTouchBar = false
-    @Published var twoPhases = true
-    @Published var addImplicitView = false
-    @Published var showImplicit = false
+enum AlignmentEnum: Equatable {
+    case leading
+    case center
+    case trailing
+    case value(CGFloat)
     
-    @Published var algn: [AlignmentEnum] = [.center, .center, .center]
-    @Published var delayedAlgn: [AlignmentEnum] = [.center, .center, .center]
-    @Published var frameAlignment: Alignment = .center
-    @Published var stackAlignment: HorizontalAlignment = .leading
+    var asString: String {
+        switch self {
+        case .leading:
+            return "d[.leading]"
+        case .center:
+            return "d[.center]"
+        case .trailing:
+            return "d[.trailing]"
+        case .value(let v):
+            return "\(v)"
+        }
+    }
+    
+    func asNumber(width: CGFloat) -> CGFloat {
+        switch self {
+        case .leading:
+            return 0
+        case .center:
+            return width / 2.0
+        case .trailing:
+            return width
+        case .value(let v):
+            return v
+        }
+    }
+    
+    func computedValue(_ d: ViewDimensions) -> CGFloat {
+        switch self {
+        case .leading:
+            return d[.leading]
+        case .center:
+            return d.width / 2.0
+        case .trailing:
+            return d[.trailing]
+        case .value(let v):
+            return v
+        }
+    }
+    
+    static func fromHorizontalAlignment(_ a: HorizontalAlignment) -> AlignmentEnum {
+        switch a {
+        case .leading:
+            return .leading
+        case .center:
+            return .center
+        case .trailing:
+            return .trailing
+        default:
+            return .value(0)
+        }
+    }
+}
+
+@Observable
+class Model {
+    var minimumContainer = true
+    var extendedTouchBar = false
+    var twoPhases = true
+    var addImplicitView = false
+    var showImplicit = false
+    
+    var algn: [AlignmentEnum] = [.center, .center, .center]
+    var delayedAlgn: [AlignmentEnum] = [.center, .center, .center]
+    var frameAlignment: Alignment = .center
+    var stackAlignment: HorizontalAlignment = .leading
     
     func nextAlignment() -> Alignment {
         if self.frameAlignment == .leading {
@@ -27,6 +87,13 @@ class Model: ObservableObject {
         } else {
             return .leading
         }
+    }
+    
+    func binding<Value>(_ keyPath: ReferenceWritableKeyPath<Model, Value>) -> Binding<Value> {
+        Binding(
+            get: { self[keyPath: keyPath] },
+            set: { self[keyPath: keyPath] = $0 }
+        )
     }
 }
 
@@ -60,7 +127,7 @@ extension HorizontalAlignment {
     }
 }
 
-extension HorizontalAlignment: Hashable {
+extension HorizontalAlignment: @retroactive Hashable {
     public func hash(into hasher: inout Hasher) {
         switch self {
         case .leading:
@@ -75,7 +142,7 @@ extension HorizontalAlignment: Hashable {
     }
 }
 
-extension Alignment: Hashable {
+extension Alignment: @retroactive Hashable {
     public func hash(into hasher: inout Hasher) {
         switch self {
         case .leading:
@@ -91,6 +158,7 @@ extension Alignment: Hashable {
 }
 
 struct ContentView: View {
+    @State var model = Model()
     
     var body: some View {
         Group {
@@ -100,48 +168,58 @@ struct ContentView: View {
             
                     VStack(spacing: 0) {
                         HStack(spacing: 0) {
-                            ControlsView().frame(width: 380).layoutPriority(1).background(Color(UIColor.secondarySystemBackground))
+                            ControlsView()
+                                .frame(width: 380)
+                                .layoutPriority(1)
+                                .background(Color(UIColor.secondarySystemBackground))
 
-                            DisplayView(width: proxy.size.width - 380).frame(maxWidth: proxy.size.width - 380).clipShape(Rectangle())//.border(Color.green, width: 3)
+                            DisplayView(width: proxy.size.width - 380)
+                                .frame(maxWidth: proxy.size.width - 380)
+                                .clipShape(Rectangle())//.border(Color.green, width: 3)
                             
-                        }.frame(height: (proxy.size.height - 300))
+                        }
+                        .frame(height: (proxy.size.height - 300))
 
                         VStack {
                             CodeView().frame(height: 300)
-                        }.frame(width: proxy.size.width, alignment: .center).background(Color(UIColor.secondarySystemBackground))
+                        }
+                        .frame(width: proxy.size.width, alignment: .center)
+                        .background(Color(UIColor.secondarySystemBackground))
 
                         
-                    }.environmentObject(Model())
+                    }
+                    .environment(model)
                 }
             } else {
                 VStack(spacing: 30) {
                     Text("I need an iPad to run!")
                     Text("😟").scaleEffect(2)
-                }.font(.largeTitle)
+                }
+                .font(.largeTitle)
             }
         }
     }
 }
 
 struct ControlsView: View {
-    @EnvironmentObject var model: Model
+    @Environment(Model.self) var model: Model
     
     var body: some View {
-        
         return Form {
             HStack { Spacer(); Text("Settings").font(.title); Spacer() }
-            Toggle(isOn: self.$model.minimumContainer, label: { Text("Narrow Container") })
-            Toggle(isOn: self.$model.extendedTouchBar, label: { Text("Extended Bar") })
-            Toggle(isOn: self.$model.twoPhases, label: { Text("Show in Two Phases") })
-            Toggle(isOn: self.$model.addImplicitView, label: { Text("Include Implicitly View") })
+            Toggle(isOn: model.binding(\.minimumContainer), label: { Text("Narrow Container") })
+            Toggle(isOn: model.binding(\.extendedTouchBar), label: { Text("Extended Bar") })
+            Toggle(isOn: model.binding(\.twoPhases), label: { Text("Show in Two Phases") })
+            Toggle(isOn: model.binding(\.addImplicitView), label: { Text("Include Implicitly View") })
             
             if self.model.addImplicitView {
-                Toggle(isOn: self.$model.showImplicit, label: { Text("Show Implicit Guides") })//.disabled(!self.model.addImplicitView)
+                Toggle(isOn: model.binding(\.showImplicit), label: { Text("Show Implicit Guides") })
+                //.disabled(!self.model.addImplicitView)
             }
             
             HStack {
                 Text("Frame Alignment")
-                Picker(selection: self.$model.frameAlignment.animation(), label: EmptyView()) {
+                Picker(selection: model.binding(\.frameAlignment).animation(), label: EmptyView()) {
                     Text(".leading").tag(Alignment.leading)
                     Text(".center").tag(Alignment.center)
                     Text(".trailing").tag(Alignment.trailing)
@@ -150,7 +228,7 @@ struct ControlsView: View {
             
             HStack {
                 Text("Stack Alignment")
-                Picker(selection: self.$model.stackAlignment.animation(), label: EmptyView()) {
+                Picker(selection: model.binding(\.stackAlignment).animation(), label: EmptyView()) {
                     Text(".leading").tag(HorizontalAlignment.leading)
                     Text(".center").tag(HorizontalAlignment.center)
                     Text(".trailing").tag(HorizontalAlignment.trailing)
@@ -161,12 +239,11 @@ struct ControlsView: View {
 }
 
 struct CodeView: View {
-    @EnvironmentObject var model: Model
+    @Environment(Model.self) var model: Model
     
     var body: some View {
         VStack(alignment: .leading) {
-            
-            Text("VStack(alignment: \(self.model.stackAlignment.asString) {")
+            Text("VStack(alignment: \(model.stackAlignment.asString) {")
             
             CodeFragment(idx: 0)
             CodeFragment(idx: 1)
@@ -197,7 +274,7 @@ struct CodeView: View {
 }
 
 struct CodeFragment: View {
-    @EnvironmentObject var model: Model
+    @Environment(Model.self) var model: Model
     
     var idx: Int
     
@@ -214,11 +291,10 @@ struct CodeFragment: View {
 }
 
 struct DisplayView: View {
-    @EnvironmentObject var model: Model
+    @Environment(Model.self) var model: Model
     let width: CGFloat
     
     var body: some View {
-        
         VStack(alignment: self.model.stackAlignment, spacing: 20) {
             
             Block(algn: binding(0)).frame(width: 250)
@@ -291,7 +367,7 @@ struct Block: View {
 }
 
 struct TouchBar: View {
-    @EnvironmentObject var model: Model
+    @Environment(Model.self) var model: Model
     
     @State private var flag = false
     
@@ -342,67 +418,4 @@ struct MarkerLine: Shape {
         
         return p
     }
-}
-
-enum AlignmentEnum: Equatable {
-    case leading
-    case center
-    case trailing
-    case value(CGFloat)
-    
-    var asString: String {
-        switch self {
-        case .leading:
-            return "d[.leading]"
-        case .center:
-            return "d[.center]"
-        case .trailing:
-            return "d[.trailing]"
-        case .value(let v):
-            return "\(v)"
-        }
-    }
-    
-    func asNumber(width: CGFloat) -> CGFloat {
-        switch self {
-        case .leading:
-            return 0
-        case .center:
-            return width / 2.0
-        case .trailing:
-            return width
-        case .value(let v):
-            return v
-        }
-    }
-    
-    func computedValue(_ d: ViewDimensions) -> CGFloat {
-        switch self {
-        case .leading:
-            return d[.leading]
-        case .center:
-            return d.width / 2.0
-        case .trailing:
-            return d[.trailing]
-        case .value(let v):
-            return v
-        }
-    }
-    
-    static func fromHorizontalAlignment(_ a: HorizontalAlignment) -> AlignmentEnum {
-        switch a {
-        case .leading:
-            return .leading
-        case .center:
-            return .center
-        case .trailing:
-            return .trailing
-        default:
-            return .value(0)
-        }
-    }
-}
-
-#Preview {
-    ContentView()
 }
