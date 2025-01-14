@@ -25,7 +25,8 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List(logTeam) { member in
-                NavigationLink(destination: Text("\(member.symbol)").font(.system(size: 200))) {
+                NavigationLink(destination: Text("\(member.symbol)")
+                    .font(.system(size: 200))) {
                     Text(member.name)
                 }
             }
