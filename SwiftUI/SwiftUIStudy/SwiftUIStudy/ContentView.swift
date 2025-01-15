@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct TeamMember: Identifiable {
-    let id = UUID()  // 고유 식별자를 위한 UUID (자동 생성)
+    let id = UUID()
     let name: String
     let symbol: String
 }
+
+
 
 struct ContentView: View {
     let logTeam: [TeamMember] = [
@@ -21,17 +23,61 @@ struct ContentView: View {
         TeamMember(name: "장새벽", symbol: "🌒"),
         TeamMember(name: "조영민", symbol: "🦊")
     ]
+    @State var selection: Int = 1
     
     var body: some View {
-        NavigationStack {
-            List(logTeam) { member in
-                NavigationLink(destination: Text("\(member.symbol)")
-                    .font(.system(size: 200))) {
-                    Text(member.name)
+        TabView(selection: $selection) {
+            VStack {
+                Text("Menu")
+                    .textCase(.uppercase)
+                    .fontWeight(.heavy)
+                    .padding()
+                Text("준비중입니다...")
+                    .font(.headline)
+            }
+            .tabItem {
+                Image(systemName: "list.bullet")
+                Text("Menu")
+            }
+            .tag(0)
+            Grid {
+                ForEach(logTeam) { member in
+                    GridRow {
+                        Text("\(member.symbol)")
+                            .font(.largeTitle)
+                            .padding()
+                            .background(Color.blue.opacity(0.2))
+                            .cornerRadius(8)
+                        Text("\(member.name)")
+                            .font(.largeTitle)
+                            .padding()
+                            .background(Color.blue.opacity(0.4))
+                            .cornerRadius(8)
+                    }
                 }
             }
-            .navigationTitle("5조: log")
+            .tabItem {
+                Image(systemName: "house.fill")
+                Text("Home")
+            }
+            .tag(1)
+            VStack {
+                Text("Menu")
+                    .textCase(.uppercase)
+                    .fontWeight(.heavy)
+                    .padding()
+                Text("준비중입니다...")
+                    .font(.headline)
+            }
+            .tabItem {
+                Image(systemName: "gearshape.fill")
+                Text("Setting").font(.title)
+            }
+            .tag(2)
         }
+        .font(.largeTitle)
+        // 쓸어넘겨서 탭 이동
+        //.tabViewStyle(PageTabViewStyle())
     }
 }
 
