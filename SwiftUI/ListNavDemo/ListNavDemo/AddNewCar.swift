@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct AddNewCar: View {
-    @State var carStore = CarStore()
+    var carStore: CarStore
+    @Binding var path: NavigationPath
+    
     @State private var isHybrid: Bool = false
     @State private var name: String = ""
     @State private var description: String = ""
+    
     
     var body: some View {
         Form {
@@ -29,6 +32,7 @@ struct AddNewCar: View {
                 }
                 .padding()
             }
+            
             Button(action: addNewCar) {
                 Text("Add Car")
             }
@@ -36,14 +40,13 @@ struct AddNewCar: View {
     }
     
     func addNewCar() {
-        let newCar = Car(id: UUID().uuidString, name: name, description: description, isHybrid: isHybrid, imageName: "tesla_model_3")
-        
+        let newCar = Car(id: UUID().uuidString,
+                         name: name,
+                         description: description,
+                         isHybrid: isHybrid, imageName: "tesla_model_3")
+        carStore.cars.append(newCar)
+        path.removeLast()
     }
-    
-}
-
-#Preview {
-    AddNewCar()
 }
 
 struct DataInput: View {
@@ -54,6 +57,10 @@ struct DataInput: View {
         VStack(alignment: .leading) {
             Text(title)
                 .font(.headline)
+            
+            TextField("Enter \(title)", text: $userInput)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
         }
+        .padding()
     }
 }
