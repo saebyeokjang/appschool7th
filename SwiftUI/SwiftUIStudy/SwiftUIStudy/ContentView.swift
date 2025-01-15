@@ -27,19 +27,21 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $selection) {
-            VStack {
-                Text("Menu")
-                    .textCase(.uppercase)
-                    .fontWeight(.heavy)
-                    .padding()
-                Text("준비중입니다...")
-                    .font(.headline)
-            }
-            .tabItem {
-                Image(systemName: "list.bullet")
-                Text("Menu")
-            }
-            .tag(0)
+            Text("Menu")
+                .textCase(.uppercase)
+                .fontWeight(.heavy)
+                .contextMenu {
+                    Button(action: {
+                        selection = 1
+                    }, label: {
+                        Text("홈으로 가기")
+                    })}
+                .padding()
+                .tabItem {
+                    Image(systemName: "list.bullet")
+                    Text("Menu")
+                }
+                .tag(0)
             Grid {
                 ForEach(logTeam) { member in
                     GridRow {
@@ -62,7 +64,7 @@ struct ContentView: View {
             }
             .tag(1)
             VStack {
-                Text("Menu")
+                Text("Setting")
                     .textCase(.uppercase)
                     .fontWeight(.heavy)
                     .padding()
