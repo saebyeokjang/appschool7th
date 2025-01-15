@@ -33,7 +33,26 @@ struct ContentView: View {
         }
         .font(.largeTitle)
         // 쓸어넘겨서 탭 이동
-        //.tabViewStyle(PageTabViewStyle())
+        .tabViewStyle(PageTabViewStyle())
+        
+        HStack {
+            Spacer()
+            Button("1") {
+                selection = 0
+            }
+            .disabled(selection == 0)
+            Spacer()
+            Button("2") {
+                selection = 1
+            }
+            .disabled(selection == 1)
+            Spacer()
+            Button("3") {
+                selection = 2
+            }
+            .disabled(selection == 2)
+            Spacer()
+        }
     }
 }
 
