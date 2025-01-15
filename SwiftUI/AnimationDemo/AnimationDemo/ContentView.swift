@@ -8,27 +8,33 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var offset: CGSize = .zero
+    @State private var isTextVisible: Bool = false
     
     var body: some View {
-        Circle()
-            .fill(Color.blue)
-            .frame(width: 100, height: 100)
-            .offset(offset)
-            .gesture(
-                DragGesture()
-                    .onChanged {gesture in
-                        withAnimation {
-                            self.offset =
-                            gesture.translation
-                        }
-                    }
-                    .onEnded { _ in
-                        withAnimation(.spring()) {
-                            self.offset = .zero
-                        }
-                    }
-            )
+        VStack(spacing: 20) {
+            Button(action: {
+                withAnimation(.easeInOut(duration: 1)) {
+                    isTextVisible.toggle()
+                }
+            }, label: {
+                Text("Toggle Text")
+                    .font(.title2)
+                    .padding()
+                    .foregroundStyle(.white)
+                    .background(Color.blue)
+                    .clipShape(.rect(cornerRadius: 10))
+            })
+            
+            if isTextVisible {
+                Text("Hello SwiftUI Animation")
+                    .font(.largeTitle)
+                    .padding()
+                    .transition(.opacity)
+                    //.transition(.scale)
+                    //.transition(.slide)
+                    //.transition(.move(edge: .leading))
+            }
+        }
     }
 }
 
