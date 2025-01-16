@@ -13,10 +13,10 @@ struct ContentView: View {
     @State var quantity: String = ""
     
     @Environment(\.managedObjectContext) private var viewContext
-
+    
     @FetchRequest(entity: Product.entity(), sortDescriptors: [])
     private var products: FetchedResults<Product>
-
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -50,6 +50,7 @@ struct ContentView: View {
                             Text(product.quantity ?? "Not found")
                         }
                     }
+                    .onDelete(perform: deleteItems)
                 }
                 .navigationTitle("Product Database")
             }
@@ -57,13 +58,30 @@ struct ContentView: View {
             .textFieldStyle(RoundedBorderTextFieldStyle())
         }
     }
-
+    
     private func addProduct() {
-        
+        withAnimation {
+            let newProduct = Product(context: viewContext)
+            newProduct.name = name
+            newProduct.quantity = quantity
+            saveContext()
+        }
     }
-
+    
     private func deleteItems(offsets: IndexSet) {
-        
+        withAnimation {
+            offsets.map { products[$0] }.forEach(viewContext.delete)
+            saveContext()
+        }
+    }
+    
+    private func saveContext() {
+        do {
+            try viewContext.save()
+        } catch {
+            let nsError = error as NSError
+            fatalError("Unresolved error: \(nsError), \(nsError.userInfo)")
+        }
     }
 }
 
