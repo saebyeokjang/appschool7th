@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B3D3F8D52D38CA4400E08989 /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D3F8D42D38CA4400E08989 /* ResultsView.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		B31B165D2D38A43900027672 /* CoreDataDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3D3F8D42D38CA4400E08989 /* ResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +37,7 @@
 		B31B16542D38A43900027672 = {
 			isa = PBXGroup;
 			children = (
+				B3D3F8D42D38CA4400E08989 /* ResultsView.swift */,
 				B31B165F2D38A43900027672 /* CoreDataDemo */,
 				B31B165E2D38A43900027672 /* Products */,
 			);
@@ -119,6 +125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3D3F8D52D38CA4400E08989 /* ResultsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
