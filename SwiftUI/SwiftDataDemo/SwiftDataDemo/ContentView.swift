@@ -9,39 +9,68 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
+    @State var name: String = ""
+    @State var quantity: String = ""
+    
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @Query private var products: [Product]
 
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+        NavigationStack {
+            VStack {
+                TextField("Product name", text: $name)
+                TextField("Product quantity", text: $quantity)
+                
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        addProduct()
+                    }, label: {
+                        Text("Add")
+                    })
+                    Spacer()
+//                    NavigationLink(destination: ResultsView(name: name, viewContext: viewContext)) {
+//                        Text("Find")
+//                    }
+                    Spacer()
+                    Button(action: {
+                        name = ""
+                        quantity = ""
+                    }, label: {
+                        Text("Clear")
+                    })
+                    Spacer()
+                }
+                .padding()
+                .frame(maxWidth: .infinity)
+                List {
+                    ForEach(products) { product in
+                        NavigationLink {
+                            Text("Product at \(product.name ?? "Not Found")")
+                        } label: {
+                            HStack {
+                                Text(product.name ?? "Not Found")
+                                Spacer()
+                                Text(product.quantity ?? "Not Found")
+                            }
+                        }
+                    }
+                    .onDelete(perform: deleteItems)
+                }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        EditButton()
                     }
                 }
-                .onDelete(perform: deleteItems)
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
+            .padding()
+            .textFieldStyle(RoundedBorderTextFieldStyle())
         }
     }
 
-    private func addItem() {
+    private func addProduct() {
         withAnimation {
-            let newItem = Item(timestamp: Date())
+            let newItem = Product(name: name, quantity: quantity)
             modelContext.insert(newItem)
         }
     }
@@ -49,7 +78,7 @@ struct ContentView: View {
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
-                modelContext.delete(items[index])
+                modelContext.delete(products[index])
             }
         }
     }
@@ -57,5 +86,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+        .modelContainer(for: Product.self, inMemory: true)
 }
