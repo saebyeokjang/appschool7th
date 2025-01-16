@@ -18,7 +18,7 @@ struct ImageDocDemoDocument: FileDocument {
     var image: UIImage = UIImage()
     
     init() {
-        if let image = UIImage(named: "cascaedfalls") {
+        if let image = UIImage(named: "cascadefalls") {
             self.image = image
         }
     }
