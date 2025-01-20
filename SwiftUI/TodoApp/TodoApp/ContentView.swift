@@ -8,6 +8,9 @@
 import SwiftUI
 import SwiftData
 
+import SwiftUI
+import SwiftData
+
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var todos: [TodoItem]
@@ -19,7 +22,7 @@ struct ContentView: View {
             List {
                 ForEach(todos) { item in
                     NavigationLink {
-                        Text("\(item.title) at \(item.createdAt, format: Date.FormatStyle(date: .numeric, time: .standard))")
+                        TodoDetailView(item: item)
                     } label: {
                         Text("\(item.title) at \(item.createdAt, format: Date.FormatStyle(date: .numeric, time: .standard))")
                     }

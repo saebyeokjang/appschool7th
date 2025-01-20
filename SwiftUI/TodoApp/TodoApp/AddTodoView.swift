@@ -6,56 +6,42 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct AddTodoView: View {
+    // 데이터 저장소에 접근할 수 있는 환경 변수
     @Environment(\.modelContext) private var modelContext
-    @Query private var todos: [TodoItem]
-
+    // 나를 호출한 뷰에서 닫기 기능을 동작 시키는 환경 변수(클로저)
+    @Environment(\.dismiss) private var dismiss
+    
+    @State private var title: String = ""
+    
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(todos) { item in
-                    NavigationLink {
-                        Text("Item at \(item.createdAt, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.createdAt, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
+        NavigationStack {
+            Form {
+                Section {
+                    TextField("Title", text: $title)
                 }
-                .onDelete(perform: deleteItems)
             }
+            .navigationTitle("New Todo")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        dismiss()
                     }
                 }
-            }
-        } detail: {
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = TodoItem(title: "New Item")
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(todos[index])
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Save") {
+                        let todo = TodoItem(title: title)
+                        modelContext.insert(todo)
+                        // 뷰 닫기와 동시에 모델 컨텍스트 저장이 호출된다.
+                        dismiss()
+                    }
+                }
             }
         }
     }
 }
 
 #Preview {
-    ContentView()
-        .modelContainer(for: TodoItem.self, inMemory: true)
+    AddTodoView()
 }
