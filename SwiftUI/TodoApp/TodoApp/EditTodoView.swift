@@ -20,27 +20,25 @@ struct EditTodoView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            Form {
-                Section {
-                    TextField("Title", text: $title)
+        Form {
+            Section {
+                TextField("Title", text: $title)
+            }
+        }
+        .navigationTitle("Edit Todo")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Save") {
+                    // 수정 기능
+                    todo.title = title
+                    // 뷰 닫기와 동시에 모델 컨텍스트 저장이 호출된다.
+                    dismiss()
                 }
             }
-            .navigationTitle("Edit Todo")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Save") {
-                        // 수정 기능
-                        todo.title = title
-                        // 뷰 닫기와 동시에 모델 컨텍스트 저장이 호출된다.
-                        dismiss()
-                    }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Cancel") {
-                        // 수정 취소 기능
-                        dismiss()
-                    }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Cancel") {
+                    // 수정 취소 기능
+                    dismiss()
                 }
             }
         }
