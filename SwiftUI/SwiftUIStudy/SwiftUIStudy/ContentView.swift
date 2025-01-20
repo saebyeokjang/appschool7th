@@ -24,24 +24,29 @@ struct ContentView: View {
         TeamMember(name: "조영민", symbol: "🦊")
     ]
     @State var selection: Int = 1
+    @State private var showingAddTodo = false
     
     var body: some View {
         TabView(selection: $selection) {
-            Text("Menu")
-                .textCase(.uppercase)
-                .fontWeight(.heavy)
-                .contextMenu {
-                    Button(action: {
-                        selection = 1
-                    }, label: {
-                        Text("홈으로 가기")
-                    })}
-                .padding()
-                .tabItem {
-                    Image(systemName: "list.bullet")
-                    Text("Menu")
-                }
-                .tag(0)
+            NavigationStack {
+                TodoListView()
+                    .navigationTitle("할 건 해야지, 반드시")
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: { showingAddTodo = true }) {
+                                Label("Add Todo", systemImage: "plus")
+                            }
+                        }
+                    }
+            }
+            .sheet(isPresented: $showingAddTodo) {
+                AddTodoView()
+            }
+            .tabItem {
+                Image(systemName: "list.bullet")
+                Text("TODO List")
+            }
+            .tag(0)
             Grid {
                 ForEach(logTeam) { member in
                     GridRow {
@@ -77,7 +82,6 @@ struct ContentView: View {
             }
             .tag(2)
         }
-        .font(.largeTitle)
         // 쓸어넘겨서 탭 이동
         //.tabViewStyle(PageTabViewStyle())
     }

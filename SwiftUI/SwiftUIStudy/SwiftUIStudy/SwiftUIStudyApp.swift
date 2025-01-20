@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
-struct SwiftUIStudyApp: App {
+struct TodoApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .modelContainer(for: TodoItem.self) // SwiftData와 연결
         }
     }
 }
