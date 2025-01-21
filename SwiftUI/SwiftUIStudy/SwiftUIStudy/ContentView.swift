@@ -30,7 +30,7 @@ struct ContentView: View {
         TabView(selection: $selection) {
             NavigationStack {
                 TodoListView()
-                    .navigationTitle("할 건 해야지, 반드시")
+                    .navigationTitle("TODOTODO")
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button(action: { showingAddTodo = true }) {
