@@ -69,6 +69,7 @@ struct WeatherWidget: Widget {
             WeatherWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
+        .contentMarginsDisabled()
     }
 }
 
