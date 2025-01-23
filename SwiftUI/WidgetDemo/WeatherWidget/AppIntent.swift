@@ -21,7 +21,7 @@ struct WeatherLocation: AppEntity, InstanceDisplayRepresentable, TypeDisplayRepr
     // TypeDisplayRepresentable 프로토콜 요구사항
     static var typeDisplayRepresentation: TypeDisplayRepresentation {
         TypeDisplayRepresentation(
-            name: "Weather Location"
+            name: "지역 설정"
         )
     }
     
@@ -29,7 +29,7 @@ struct WeatherLocation: AppEntity, InstanceDisplayRepresentable, TypeDisplayRepr
     var displayRepresentation: DisplayRepresentation {
         DisplayRepresentation(
             title: "\(locationData.city)",
-            subtitle: "" // 필요한 경우 부제목 추가
+            subtitle: "도시" // 필요한 경우 부제목 추가
         )
     }
 }
