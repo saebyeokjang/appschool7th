@@ -43,6 +43,7 @@ struct WeatherWidgetEntryView : View {
                 }
             }
         }
+        .widgetURL(entry.url)
     }
 }
 
