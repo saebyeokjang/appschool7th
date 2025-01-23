@@ -10,16 +10,17 @@ import SwiftUI
 
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> WeatherEntry {
-        WeatherEntry(date: Date(), city: "London", temperature: 89, description: "Thunder Storm", icon: "cloud.bolt.rain", image: "thunder", url: thunderUrl)
+        WeatherEntry(date: Date(), city: "-", temperature: 0, description: "-", icon: "circle.fill", image: "", url: thunderUrl)
     }
 
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> WeatherEntry {
-        WeatherEntry(date: Date(), city: "London", temperature: 89, description: "Thunder Storm", icon: "cloud.bolt.rain", image: "thunder", url: thunderUrl)
+        configuration.location.locationData.timeline[0]
     }
     
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<WeatherEntry> {
 
-        return Timeline(entries: londonTimeline, policy: .atEnd)
+        let timline = configuration.location.locationData.timeline
+        return Timeline(entries: timline, policy: .atEnd)
     }
 
 //    func relevances() async -> WidgetRelevances<ConfigurationAppIntent> {
@@ -34,7 +35,7 @@ struct WeatherWidgetEntryView : View {
 
     var body: some View {
         ZStack {
-            Color("WeatherBackgroundColor")
+            Color("weatherBackgroundColor")
             HStack {
                 WeatherSubView(entry: entry)
                 if widgetFamily == .systemMedium {
