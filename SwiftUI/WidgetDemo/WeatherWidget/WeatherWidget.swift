@@ -29,11 +29,19 @@ struct Provider: AppIntentTimelineProvider {
 
 struct WeatherWidgetEntryView : View {
     var entry: Provider.Entry
+    
+    @Environment(\.widgetFamily) private var widgetFamily
 
     var body: some View {
         ZStack {
             Color("WeatherBackgroundColor")
-            WeatherSubView(entry: entry)
+            HStack {
+                WeatherSubView(entry: entry)
+                if widgetFamily == .systemMedium {
+                    Image(entry.image)
+                        .resizable()
+                }
+            }
         }
     }
 }
@@ -70,24 +78,20 @@ struct WeatherWidget: Widget {
                 .containerBackground(.fill.tertiary, for: .widget)
         }
         .contentMarginsDisabled()
-    }
-}
-
-extension ConfigurationAppIntent {
-    fileprivate static var smiley: ConfigurationAppIntent {
-        let intent = ConfigurationAppIntent()
-        intent.favoriteEmoji = "😀"
-        return intent
-    }
-    
-    fileprivate static var starEyes: ConfigurationAppIntent {
-        let intent = ConfigurationAppIntent()
-        intent.favoriteEmoji = "🤩"
-        return intent
+        .configurationDisplayName("My Weather Widget")
+        .description("A demo weather widget")
+        .supportedFamilies([.systemSmall, .systemMedium])
     }
 }
 
 #Preview(as: .systemSmall) {
+    WeatherWidget()
+} timeline: {
+    londonTimeline[0]
+    miamiTimeline[0]
+}
+
+#Preview(as: .systemMedium) {
     WeatherWidget()
 } timeline: {
     londonTimeline[0]
