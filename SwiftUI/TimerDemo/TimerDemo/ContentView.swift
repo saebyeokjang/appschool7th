@@ -30,7 +30,11 @@ struct ContentView: View {
                 .font(.system(size: 30, weight: .bold))
                 .foregroundStyle(timeRemaining <= 5 ? .red : .white)
                 .onTapGesture {
-                    if timeRemaining < 60 {
+                    if timeRemaining < 10 {
+                        timeRemaining = 10
+                        totalTime = 10
+                        resetProgress()
+                    } else if timeRemaining < 60 {
                         timeRemaining = 60
                         totalTime = 60
                         resetProgress()
@@ -49,9 +53,8 @@ struct ContentView: View {
                     }
                 }
             
-            // 버튼 영역
             HStack {
-                // 시작/정지 버튼
+                // 시작/정지
                 Button(action: {
                     if isRunning {
                         stopTimer()
@@ -68,7 +71,7 @@ struct ContentView: View {
                 .frame(width: 40, height: 40)
                 .cornerRadius(100)
                 
-                // 초기화 버튼
+                // 초기화
                 Button(action: {
                     stopTimer()
                     timeRemaining = 10
@@ -97,23 +100,19 @@ struct ContentView: View {
             setWindowAlwaysOnTop()
         }
         .onDisappear {
-            stopTimer() // 뷰가 사라질 때 타이머 정지
+            stopTimer()
         }
     }
     
-    // 타이머 시작 함수
+    // 타이머 시작
     private func startTimer() {
         isRunning = true
-        
-        // 타이머 생성
         timer = Timer.publish(every: 0.01, on: .main, in: .common)
             .autoconnect()
             .sink { _ in
-                // timeRemaining은 1초 단위로 감소
                 if isRunning, timeRemaining > 0 {
                     progress -= 0.01 / Float(totalTime)
                     
-                    // 매 1초마다 timeRemaining을 감소
                     if progress <= Float(timeRemaining - 1) / Float(totalTime) {
                         timeRemaining -= 1
                     }
@@ -124,18 +123,19 @@ struct ContentView: View {
             }
     }
     
-    // 타이머 정지 함수
+    // 타이머 정지
     private func stopTimer() {
         isRunning = false
         timer?.cancel()
         timer = nil
     }
     
-    // ProgressView 초기화
+    // Progress 초기화
     private func resetProgress() {
         progress = 1.0
     }
     
+    // 항상 위
     private func setWindowAlwaysOnTop() {
         if let window = NSApplication.shared.windows.first {
             window.level = .floating
@@ -144,7 +144,7 @@ struct ContentView: View {
     
     private func playCustomSound() {
         guard let url = Bundle.main.url(forResource: "duck", withExtension: "mp3") else {
-            print("사운드 파일을 찾을 수 없습니다.")
+            print("사운드 파일 ㅇㄷ?")
             return
         }
         
@@ -157,7 +157,7 @@ struct ContentView: View {
             audioPlayer?.play()
             
         } catch {
-            print("사운드를 재생할 수 없습니다. 오류: \(error.localizedDescription)")
+            print("사운드 재생 오류: \(error.localizedDescription)")
         }
     }
     
