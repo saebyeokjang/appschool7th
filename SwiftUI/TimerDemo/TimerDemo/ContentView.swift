@@ -33,15 +33,19 @@ struct ContentView: View {
                     if timeRemaining < 60 {
                         timeRemaining = 60
                         totalTime = 60
+                        resetProgress()
                     } else if timeRemaining < 300 {
                         timeRemaining = 300
                         totalTime = 300
+                        resetProgress()
                     } else if timeRemaining < 600 {
                         timeRemaining = 600
                         totalTime = 600
+                        resetProgress()
                     } else {
                         timeRemaining = 60
                         totalTime = 60
+                        resetProgress()
                     }
                 }
             
