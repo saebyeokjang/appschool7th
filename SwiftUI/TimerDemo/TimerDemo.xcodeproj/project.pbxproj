@@ -32,8 +32,8 @@
 		D87D489F2D431341006901CC = {
 			isa = PBXGroup;
 			children = (
-				D87D48AA2D431341006901CC /* TimerDemo */,
 				D87D48A92D431341006901CC /* Products */,
+				D87D48AA2D431341006901CC /* TimerDemo */,
 			);
 			sourceTree = "<group>";
 		};
