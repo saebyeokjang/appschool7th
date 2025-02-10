@@ -85,7 +85,31 @@ void main() {
 
   // forEach loop with function reference: 함수 참조를 사용하여 간단하게 표현
   daysOfWeek.forEach(print);
+
+  print(Day.values);
+  print('${Day.values[0]}');
+  print(Day.values.byName('mon'));
+
+  // Error handling
+  String name = 'Dart';
+
+  try {
+    print('Name: $name');
+    // indexOf() 함수는 문자열에서 특정 문자의 인덱스를 반환,
+    // 첫번째 파라미터 name[0]은 문자열의 첫 번째 문자를 의미
+    // 두번째 파라미터 name.length - (name.length +2) 는 인덱스 범위
+    name.indexOf(name[0], name.length - (name.length + 2));
+  } on RangeError catch (exception) {
+    print('On Exception: $exception');
+  } catch (exception) {
+    print('Catch Exception: $exception');
+  } finally {
+    print('Mission completed!');
+  }
 }
+
+// 열거형 사용하기
+enum Day { sun, mon, tues }
 
 String smallSwitchReturn(int intValue) {
   return switch (intValue) {
