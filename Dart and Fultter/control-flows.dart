@@ -1,7 +1,8 @@
 void main() {
-  // 조건이 충족되었는지 확인하기
+  // 조건이 충족 되었는지 확인하기
   bool isFootball = true;
 
+  // if-else statement: 조건이 참이면 if 블록 실행, 거짓이면 else 블록 실행
   if (isFootball) {
     print('Go football');
   } else {
@@ -10,7 +11,7 @@ void main() {
 
   bool isTrue = true;
 
-  // while loop 조건이 참일 때 실행
+  // while loop: 조건이 참일 때 실행
   while (isTrue) {
     print('Hello');
     isTrue = false;
@@ -31,19 +32,14 @@ void main() {
       print('Tuesday');
     default:
       print('Error: Value not defined?');
-      break;
   }
 
   // 슬래시, 별, 쉼표, 세미콜론 등이 상수 변수인 경우...
-  const slash = '/';
-  const star = '*';
-  const plus = '+';
-  const minus = '-';
 
   String charCode = '1';
 
   switch (charCode) {
-    case slash || star || plus || minus:
+    case '/' || '*' || '+' || '-':
       print('Mathematical operator');
     default:
       print('Unknown');
@@ -58,5 +54,43 @@ void main() {
     default:
       print('Unknown');
   }
+
+  // switch statement with return
+  print(smallSwitchReturn(1));
+
+  // for loop: 반복 횟수가 정해진 경우 사용
+  int maxIterations = 5;
+  for (var i = 0; i < maxIterations; i++) {
+    print('Iteration: $i');
+  }
+
+  // forEach loop: 배열, 리스트, 맵 등의 요소를 반복할 때 사용
+  List daysOfWeek = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+  ];
+
+  // 기본 함수 사용
+  daysOfWeek.forEach((day) {
+    print(day);
+  });
+
+  // forEach loop with arrow function: 람다 함수를 사용하여 간단하게 표현
+  daysOfWeek.forEach((day) => print(day));
+
+  // forEach loop with function reference: 함수 참조를 사용하여 간단하게 표현
+  daysOfWeek.forEach(print);
 }
+
+String smallSwitchReturn(int intValue) {
+  return switch (intValue) {
+    1 => "value is 1",
+    2 => "value is 2",
+    _ => "another value"
+  };
 }
