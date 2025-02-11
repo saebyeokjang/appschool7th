@@ -1,13 +1,13 @@
 void main() {
   // 조건이 충족 되었는지 확인하기
-  bool isFootball = true;
+  //bool isFootball = true;
 
-  // if-else statement: 조건이 참이면 if 블록 실행, 거짓이면 else 블록 실행
-  if (isFootball) {
-    print('Go football');
-  } else {
-    print('Go Sports!');
-  }
+  // // if-else statement: 조건이 참이면 if 블록 실행, 거짓이면 else 블록 실행
+  // if (isFootball) {
+  //   print('Go football');
+  // } else {
+  //   print('Go Sports!');
+  // }
 
   bool isTrue = true;
 
