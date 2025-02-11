@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 void main() {
   // String 타입의 리스트 선언
   List<String> months = [
@@ -45,7 +47,7 @@ void main() {
   };
 
   Map<String, dynamic> filmEmpire = {
-    'title': 'Empire Strikes Back',
+    'title': 'The Empire Strikes Back',
     'year': 1980,
   };
 
@@ -54,9 +56,9 @@ void main() {
     'year': 1983,
   };
 
-  List listFilms = [filmStarWars, filmEmpire, filmJedi];
+  List<Map<String, dynamic>> listFlims = [filmStarWars, filmEmpire, filmJedi];
 
-  Map<String, dynamic> currentFilm = listFilms[0];
+  Map<String, dynamic> currentFilm = listFlims[0];
 
   var currentFilmTitle = currentFilm['title'];
   print(currentFilmTitle); // Star Wars 출력
@@ -74,7 +76,7 @@ void main() {
   });
 
   // 특정 키에 해당하는 값 출력
-  print(mapMonths[1]); // January
+  print(mapMonths[1]); // January 출력
 
   // Map advanced
   Map<String, int> scores = {
@@ -84,10 +86,10 @@ void main() {
   };
 
   // 키로 존재 여부 확인
-  print(scores.containsKey('Alice')); // true
+  print(scores.containsKey('Alice')); // true 출력
 
   // 값 존재 여부 확인
-  print(scores.containsValue(80)); // true
+  print(scores.containsValue(80)); // true 출력
 
   // 키-값 쌍 제거
   scores.remove('Bob');
@@ -97,4 +99,40 @@ void main() {
   Map<String, int> updatedScores =
       scores.map((key, value) => MapEntry(key, value + 5));
   print(updatedScores); // Alice: 95, Charlie: 100 출력
+
+  Map<String, dynamic> data = {
+    'name': 'John',
+    'age': 30,
+    'city': 'Seoul',
+  };
+
+  // 키 존재 여부 확인
+  if (data.containsKey('name')) {
+    print('Name: ${data['name']}');
+  }
+
+  // 값 존재 여부 확인
+  if (data.containsValue(30)) {
+    print('Age: ${data['age']}');
+  }
+
+  // JSON 형식의 사용자 데이터
+  Map<String, dynamic> user = {
+    'id': 1,
+    'info': {
+      'name': 'Alice',
+      'contacts': [
+        {'type': 'email', 'value': 'alice@email.com'},
+        {'type': 'phone', 'value': '123-456-7890'}
+      ]
+    }
+  };
+
+  // Map을 JSON 문자열로 변환
+  String userJson = jsonEncode(user);
+  print(userJson);
+
+  // JSON 문자열을 Map으로 변환
+  Map<String, dynamic> parsed = jsonDecode(userJson);
+  print(parsed['info']['contacts'][0]['value']); // alice@email.com 출력
 }
