@@ -61,4 +61,15 @@ void main() {
   var currentFilmTitle = currentFilm['title'];
   print(currentFilmTitle); // Star Wars 출력
 
+  // Map basics
+  Map<int, String> mapMonths = {
+    1: 'January',
+    2: 'February',
+    3: 'March'
+  };
+
+  mapMonths[4] = 'April';
+  mapMonths.forEach((key, value) {
+    print('$key: $value');
+  });
 }
