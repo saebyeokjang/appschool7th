@@ -65,11 +65,36 @@ void main() {
   Map<int, String> mapMonths = {
     1: 'January',
     2: 'February',
-    3: 'March'
+    3: 'March',
   };
 
   mapMonths[4] = 'April';
   mapMonths.forEach((key, value) {
     print('$key: $value');
   });
+
+  // 특정 키에 해당하는 값 출력
+  print(mapMonths[1]); // January
+
+  // Map advanced
+  Map<String, int> scores = {
+    'Alice': 90,
+    'Bob': 80,
+    'Charlie': 95,
+  };
+
+  // 키로 존재 여부 확인
+  print(scores.containsKey('Alice')); // true
+
+  // 값 존재 여부 확인
+  print(scores.containsValue(80)); // true
+
+  // 키-값 쌍 제거
+  scores.remove('Bob');
+  print(scores); // Alice, Charlie 출력
+
+  // 점수를 5점씩 증가시킨 새로운 Map 생성
+  Map<String, int> updatedScores =
+      scores.map((key, value) => MapEntry(key, value + 5));
+  print(updatedScores); // Alice: 95, Charlie: 100 출력
 }
