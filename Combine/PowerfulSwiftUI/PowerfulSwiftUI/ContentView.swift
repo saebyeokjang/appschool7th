@@ -8,26 +8,26 @@
 import SwiftUI
 
 struct LazyGridExample: View {
-    let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible())
-    ]
-    
-    var body: some View {
-        ScrollView {
-            LazyVGrid(columns: columns, spacing: 20) {
-                ForEach(0..<50) { index in
-                    Text("Item \(index)")
-                        .frame(height: 50)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue.opacity(0.2))
-                        .cornerRadius(8)
-                }
-            }
-            .padding()
+  let rows = [
+    GridItem(.flexible()),
+    GridItem(.flexible()),
+    GridItem(.flexible())
+  ]
+
+  var body: some View {
+    ScrollView(.horizontal) {
+      LazyHGrid(rows: rows, spacing: 20) {
+        ForEach(0..<50) { index in
+          Text("Item \(index)")
+            .frame(width: 150)
+            .frame(maxHeight: .infinity)
+            .background(Color.blue.opacity(0.2))
+            .cornerRadius(8)
         }
+      }
+      .padding()
     }
+  }
 }
 
 struct ContentView: View {
@@ -39,5 +39,5 @@ struct ContentView: View {
 
 
 #Preview {
-    LazyGridExample()
+    ContentView()
 }
